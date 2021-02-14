@@ -15,10 +15,10 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - docker build -t simple-express .
-  - docker tag simple-express datacam270/simple-express:latest
+  - docker build -t udagram-user .
+  - docker tag udagram-user datacam270/udagram-user:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push datacam270/simple-express
+  - docker push datacam270/udagram-user
 
