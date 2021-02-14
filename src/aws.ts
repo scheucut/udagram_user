@@ -1,10 +1,20 @@
 import AWS = require('aws-sdk');
 import {config} from './config/config';
 
-
 // Configure AWS
-const credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
-AWS.config.credentials = credentials;
+if(config.aws_profile !== "DEPLOYED") {  
+  const credentials = new AWS.SharedIniFileCredentials({profile: config.aws_profile});
+  AWS.config.credentials = credentials;
+}
+// eingefuegt am 14.02.2021
+AWS.config.getCredentials((err) => {
+  if (err) {
+     console.error(err);
+  }
+  else {
+    console.log(`Successfully loaded AWS credentials of type=${AWS.config.credentials.constructor.name}`)
+  }
+});
 
 export const s3 = new AWS.S3({
   signatureVersion: 'v4',
